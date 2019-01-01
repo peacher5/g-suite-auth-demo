@@ -1,12 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { Fragment } from 'react'
+import ReactDOM from 'react-dom'
+import { init } from '@rematch/core'
+import { Provider } from 'react-redux'
+import { createGlobalStyle } from 'styled-components'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import * as models from './models'
+import App from './App'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+  }
+`
+
+const store = init({ models })
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Fragment>
+      <App />
+      <GlobalStyle />
+    </Fragment>
+  </Provider>,
+  document.getElementById('root')
+)
